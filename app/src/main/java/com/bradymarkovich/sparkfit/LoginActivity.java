@@ -20,7 +20,7 @@ public class LoginActivity extends AppCompatActivity {
         final Button login = (Button) findViewById(R.id.login_Button);
         final TextView registerlink = (TextView) findViewById(R.id.register_TextView);
 
-        //Go to register activity if register link is clicked
+        //Go to Register activity if register link is clicked
         registerlink.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
