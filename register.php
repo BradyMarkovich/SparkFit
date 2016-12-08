@@ -11,7 +11,7 @@
 	$fname = $_POST ["fname"];
 	$lname = $_POST ["lname"];
 	$email = $_POST ["email"];
-	$password = ["password"];
+	$password = $_POST["password"];
 	
 	$command = mysqli_prepare($connection, "INSERT INTO logins (username, LastName, FirstName, password");
 	mysqli_stmt_bind_param($command, "ssss", $email, $lname, $fname, $password);
