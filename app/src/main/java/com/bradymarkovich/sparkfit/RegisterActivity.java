@@ -1,9 +1,11 @@
 package com.bradymarkovich.sparkfit;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -22,7 +24,7 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        final String pwordFinal = "";
+
         final EditText fname = (EditText) findViewById(R.id.firstName_TxtField);
         final EditText lname = (EditText) findViewById(R.id.lastName_TxtField);
         final EditText email = (EditText) findViewById(R.id.email_TxtField);
@@ -30,7 +32,7 @@ public class RegisterActivity extends AppCompatActivity {
         final EditText pwordv = (EditText) findViewById(R.id.passwordVerify_TxtField);
         final Button register = (Button) findViewById(R.id.register_Button);
 
-
+        String passfinal;
 
         register.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -40,32 +42,48 @@ public class RegisterActivity extends AppCompatActivity {
                 final String mail = email.getText().toString();
                 final String pass = pword.getText().toString();
 
-                Response.Listener<String> responseListener = new Response.Listener<String>(){
-                    @Override
-                    public void onResponse(String response)
-                    {
-                        try {
-                            JSONObject jsonResponse = new JSONObject(response);
-                            boolean succ = jsonResponse.getBoolean("success");
-                            if (succ)
-                            {
-                                Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
-                                RegisterActivity.this.startActivity(intent);
+                //verify passwords
+                if (pword.getText().toString().equals(pwordv.getText().toString())) {
+                    Log.d("Registration Successful", "Passwords matched.");
+                    Response.Listener<String> responseListener = new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+                            try {
+                                JSONObject jsonResponse = new JSONObject(response);
+                                boolean succ = jsonResponse.getBoolean("success");
+                                if (succ) {
+                                    Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
+                                    RegisterActivity.this.startActivity(intent);
+                                } else {
+                                    AlertDialog.Builder builder = new AlertDialog.Builder(RegisterActivity.this);
+                                    builder.setMessage("Register failed").setNegativeButton("Retry", null).create().show();
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
                             }
-                            else
-                            {
-                                AlertDialog.Builder builder = new AlertDialog.Builder(RegisterActivity.this);
-                                builder.setMessage("Register failed").setNegativeButton("Retry", null).create().show();
-                            }
-                        }catch (JSONException e){
-                            e.printStackTrace();
-                        }
 
-                    }
-                };
-                RegisterRequest registerRequest = new RegisterRequest(fn, ln, mail, pass, responseListener);
-                RequestQueue queue = Volley.newRequestQueue(RegisterActivity.this);
-                queue.add(registerRequest);
+                        }
+                    };
+                    RegisterRequest registerRequest = new RegisterRequest(fn, ln, mail, pass, responseListener);
+                    RequestQueue queue = Volley.newRequestQueue(RegisterActivity.this);
+                    queue.add(registerRequest);
+                }//end if
+
+                else
+                {
+                    AlertDialog.Builder regfail = new AlertDialog.Builder(RegisterActivity.this);
+                    regfail.setTitle("Registration Failed");
+                    regfail.setMessage("Your password did not match the verify password");
+                    regfail.setNeutralButton("Retry", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            // User pressed Cancel button. Write Logic Here
+                            Log.d("Registration Failed", "Passwords did not match");
+                        }
+                    });
+
+                    regfail.show();
+
+                }
             }
 
 
