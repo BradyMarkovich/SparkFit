@@ -1,5 +1,7 @@
 package com.bradymarkovich.sparkfit;
 
+import android.util.Log;
+
 import com.android.volley.Response;
 import com.android.volley.toolbox.StringRequest;
 
@@ -15,8 +17,9 @@ public class RegisterRequest extends StringRequest {
         params = new HashMap<>();
         params.put("fname", fname);
         params.put("lname", lname);
-        params.put("email", lname);
+        params.put("email", email);
         params.put("password", password);
+        Log.d("Values", email);
     }
 
     @Override
