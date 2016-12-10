@@ -32,7 +32,6 @@ public class RegisterActivity extends AppCompatActivity {
         final EditText pwordv = (EditText) findViewById(R.id.passwordVerify_TxtField);
         final Button register = (Button) findViewById(R.id.register_Button);
 
-        String passfinal;
 
         register.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -42,7 +41,7 @@ public class RegisterActivity extends AppCompatActivity {
                 final String mail = email.getText().toString();
                 final String pass = pword.getText().toString();
 
-                //verify passwords
+                //verify passwords match
                 if (pword.getText().toString().equals(pwordv.getText().toString())) {
                     Log.d("Registration Successful", "Passwords matched.");
                     Response.Listener<String> responseListener = new Response.Listener<String>() {
@@ -53,7 +52,7 @@ public class RegisterActivity extends AppCompatActivity {
                                 boolean succ = jsonResponse.getBoolean("success");
                                 if (succ) {
                                     Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
-                                    RegisterActivity.this.startActivity(intent);
+                                    RegisterActivity.this.startActivity(intent);//change activities
                                 } else {
                                     AlertDialog.Builder builder = new AlertDialog.Builder(RegisterActivity.this);
                                     builder.setMessage("Register failed").setNegativeButton("Retry", null).create().show();
@@ -71,17 +70,18 @@ public class RegisterActivity extends AppCompatActivity {
 
                 else
                 {
+                    //pop up alert
                     AlertDialog.Builder regfail = new AlertDialog.Builder(RegisterActivity.this);
                     regfail.setTitle("Registration Failed");
                     regfail.setMessage("Your password did not match the verify password");
                     regfail.setNeutralButton("Retry", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
-                            // User pressed Cancel button. Write Logic Here
+                            // User pressed Cancel button
                             Log.d("Registration Failed", "Passwords did not match");
                         }
                     });
 
-                    regfail.show();
+                    regfail.show(); //show pop up
 
                 }
             }
