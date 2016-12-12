@@ -1,5 +1,5 @@
 <?php
-	$connection = mysqli_connect('localhost', 'root', 'buddy13!2', "sparkfit");
+	$connection = mysqli_connect('localhost', 'userAdmin', 'adminDB', "sparkfit");
 	if (!$connection){
 		die("Database Connection Failed" . mysqli_error($connection));
 	}

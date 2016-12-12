@@ -1,5 +1,5 @@
 <?php
-	$connection = mysqli_connect('localhost', 'root', 'buddy13!2', "sparkfit");
+	$connection = mysqli_connect('localhost', 'userAdmin', 'adminDB', "sparkfit");
 	if (!$connection){
 		die("Database Connection Failed" . mysqli_error($connection));
 	}
@@ -11,8 +11,8 @@
 	$email = $_POST["email"];
 	$password = $_POST["password"];
 	
-	$statement = mysqli_prepare($connection, "SELECT * FROM logins WHERE username = ?");
-	mysqli_stmt_bind_param($statement, "s", $email);
+	$statement = mysqli_prepare($connection, "SELECT * FROM users WHERE username = ? AND password = ?");
+	mysqli_stmt_bind_param($statement, "ss", $email, $password);
 	mysqli_stmt_execute($statement);
 	
 	mysqli_stmt_store_result($statement);
@@ -20,11 +20,11 @@
   mysqli_stmt_bind_result($statement, $email);
     
     $response = array();
-    $response["success"] = true;  
+    $response["success"] = false;  
     
     while(mysqli_stmt_fetch($statement)){
         $response["success"] = true;  
-        $response["username"] = $username;
+        $response["username"] = $email;
         $response["password"] = $password;
     }
     

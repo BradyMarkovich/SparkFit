@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -49,14 +50,15 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(String response) {
                         try {
+                            Log.d("Response2", response);
                             JSONObject jsonResponse = new JSONObject(response);
+                            Log.d("Response", jsonResponse.toString());
                             boolean succ = jsonResponse.getBoolean("success");
 
                             if (succ){
-                                String email1 = jsonResponse.getString("email");
 
                                 Intent intent = new Intent(LoginActivity.this, UserAreaActivity.class);
-                                intent.putExtra("email", email1);
+                                intent.putExtra("email", em);
 
                                 LoginActivity.this.startActivity(intent);
 
