@@ -51,16 +51,21 @@ public class LoginActivity extends AppCompatActivity {
                     public void onResponse(String response) {
                         try {
                             Log.d("Response2", response);
+
                             JSONObject jsonResponse = new JSONObject(response);
                             Log.d("Response", jsonResponse.toString());
+
                             boolean succ = jsonResponse.getBoolean("success");
 
                             if (succ){
-
+                                //if succcessful, switch to UserAreaActivity
                                 Intent intent = new Intent(LoginActivity.this, UserAreaActivity.class);
-                                intent.putExtra("email", em);
+                                Log.d("Email transfer", em);
+                                intent.putExtra("emailadd", em);//transfer email address amongst activities
+
 
                                 LoginActivity.this.startActivity(intent);
+
 
                             }
                             else
@@ -74,6 +79,7 @@ public class LoginActivity extends AppCompatActivity {
                         }
                     }
                 };
+                //submit a LoginRequest through LoginRequest.java
                 LoginRequest loginRequest = new LoginRequest(em, pw, resListener);
                 RequestQueue queue = Volley.newRequestQueue(LoginActivity.this);
                 queue.add(loginRequest);
