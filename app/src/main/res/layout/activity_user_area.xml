@@ -10,23 +10,20 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.bradymarkovich.sparkfit.UserAreaActivity">
 
-    <EditText
+    <TextView
+        android:text="Your Progress"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:text="Name"
-        android:ems="10"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="63dp"
-        android:id="@+id/emailVerified" />
+        android:layout_marginTop="88dp"
+        android:id="@+id/PedometerTxtV" />
 
     <TextView
-        android:text="TextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/emailVerified"
+        android:layout_below="@+id/PedometerTxtV"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="28dp"
-        android:id="@+id/userTestTxtV" />
+        android:layout_marginTop="18dp"
+        android:id="@+id/stepCountTxt" />
 </RelativeLayout>
